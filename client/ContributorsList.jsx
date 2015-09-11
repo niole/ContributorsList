@@ -33,33 +33,26 @@ ContributorsList = React.createClass({
   return flattenedCs;
   },
   displayContributors(cs) {
+    let contributors;
     if (cs.length > 0) {
       let contribs = this.getUniqueCs(cs);
-      let contributors = [];
-      _.forEach(contribs, (C,i) => {
-                if (i<6) {
-                  contributors.push(
-                        <div className="col-sm-2 col-md-2">
-                          <div className="thumbnail">
-                            <div className="thumbnail-frame">
-                              <img src={C.photo} alt="alt"/>
-                            </div>
-                            <div className="caption">
-                              <p>{C.firstName+" "}{C.lastName}</p>
-                              net contribution: <p>{C.amount}</p>
-                            </div>
-                          </div>
+      contributors = _.map(contribs.slice(0,6), C => {
+        return (
+                    <div className="col-sm-2 col-md-2">
+                      <div className="thumbnail">
+                        <div className="thumbnail-frame">
+                          <img src={C.photo} alt="alt"/>
                         </div>
-                      );
-                }
-              });
-      return (
-             <div className="row">
-              {contributors}
-             </div>
-             );
+                        <div className="caption">
+                          <p>{C.firstName+" "}{C.lastName}</p>
+                          net contribution: <p>{C.amount}</p>
+                        </div>
+                      </div>
+                    </div>
+              );
+      });
     } else {
-      contributors.push(
+      contributors = [
               <div className="col-sm-2 col-md-2 navbar-left">
                   <div className="thumbnail">
                     <a href='/'>
@@ -70,8 +63,14 @@ ContributorsList = React.createClass({
                     </div>
                   </div>
               </div>
-            );
+      ];
     }
+    return (
+           <div className="row">
+            {contributors}
+           </div>
+           );
+
   },
   render() {
     return (
