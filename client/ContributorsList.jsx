@@ -14,23 +14,23 @@ ContributorsList = React.createClass({
       }
     });
 
-   for (var id in uniqueCs) {
+    for (var id in uniqueCs) {
       let aggContribs = {};
       _.forEach(uniqueCs[id], c => {
         if (aggContribs.amount) {
           //add to amount
           aggContribs.amount += c.amount;
         } else {
-          //created first object
+          //create first object
           aggContribs.amount = c.amount;
           aggContribs.firstName = c.contributor.firstName;
           aggContribs.lastName = c.contributor.lastName;
           aggContribs.photo = c.contributor.photo;
         }
       });
-    flattenedCs.push(aggContribs);
-   }
-  return flattenedCs;
+      flattenedCs.push(aggContribs);
+    }
+    return flattenedCs;
   },
   displayContributors(cs) {
     let contributors;
@@ -38,31 +38,31 @@ ContributorsList = React.createClass({
       let contribs = this.getUniqueCs(cs);
       contributors = _.map(contribs.slice(0,6), C => {
         return (
-                    <div className="col-sm-2 col-md-2">
-                      <div className="thumbnail">
-                        <div className="thumbnail-frame">
-                          <img src={C.photo} alt="alt"/>
-                        </div>
-                        <div className="caption">
-                          <p>{C.firstName+" "}{C.lastName}</p>
-                          net contribution: <p>{C.amount}</p>
-                        </div>
-                      </div>
+                <div className="col-sm-2 col-md-2">
+                  <div className="thumbnail">
+                    <div className="thumbnail-frame">
+                      <img src={C.photo} alt="alt"/>
                     </div>
+                    <div className="caption">
+                      <p>{C.firstName+" "}{C.lastName}</p>
+                      net contribution: <p>{C.amount}</p>
+                    </div>
+                  </div>
+                </div>
               );
       });
     } else {
       contributors = [
-              <div className="col-sm-2 col-md-2 navbar-left">
-                  <div className="thumbnail">
-                    <a href='/'>
-                      <img className="prof-image" src="http://cdn3.rd.io/user/no-user-image-square.jpg"/>
-                    </a>
-                    <div className="caption">
-                        <p>invite contributors!</p>
-                    </div>
-                  </div>
+        <div className="col-sm-2 col-md-2 navbar-left">
+            <div className="thumbnail">
+              <a href='/'>
+                <img className="prof-image" src="http://cdn3.rd.io/user/no-user-image-square.jpg"/>
+              </a>
+              <div className="caption">
+                  <p>invite contributors!</p>
               </div>
+            </div>
+        </div>
       ];
     }
     return (
@@ -80,7 +80,6 @@ ContributorsList = React.createClass({
             {this.displayContributors(this.props.contributors)}
           </div>
         </nav>
-
       </span>
     );
   }
