@@ -2,31 +2,23 @@ ContributorsList = React.createClass({
   propTypes: {
     contributors: React.PropTypes.array.isRequired
   },
-  displayContributors() {
-    if (this.props.contributors.length > 0) {
-          let contributors = [];
-          _.forEach(this.props.contributors, (C,i) => {
-            if (i<6) {
-              contributors.push(
-                <div className="col-sm-2 col-md-2">
-                  <div className="thumbnail">
-                    <img src={C.photo}/>
-                    <div className="caption">
-                      <p>{C.firstName+" "}{C.lastName}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-          }
-         });
-
+  displayContributors(cs) {
+    let contributors;
+    if (cs.length > 0) {
+      contributors = _.map(cs.slice(0,6), C => {
         return (
-               <div className="row">
-                {contributors}
-               </div>
-               );
+            <div className="col-sm-2 col-md-2">
+              <div className="thumbnail">
+                <img src={C.photo}/>
+                <div className="caption">
+                  <p>{C.firstName+" "}{C.lastName}</p>
+                </div>
+              </div>
+            </div>
+          );
+      });
     } else {
-      return (
+      contributors = [
               <div className="col-sm-2 col-md-2 navbar-left">
                   <div className="thumbnail">
                     <a href='/'>
@@ -37,15 +29,20 @@ ContributorsList = React.createClass({
                     </div>
                   </div>
               </div>
-            );
+      ];
     }
+    return (
+           <div className="row">
+            {contributors}
+           </div>
+           );
   },
   render() {
     return (
       <span>
         <nav className="navbar navbar-default">
           <div className="container-fluid">
-            {this.displayContributors()}
+            {this.displayContributors(this.props.contributors)}
           </div>
         </nav>
 
