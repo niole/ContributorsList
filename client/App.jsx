@@ -9,7 +9,7 @@ App = React.createClass({
   },
   render() {
     return <ContributorsList
-            contributors={this.state.empty}
+            contributors={this.state.CL}
             />;
   }
 });
