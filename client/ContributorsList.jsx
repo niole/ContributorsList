@@ -33,6 +33,7 @@ ContributorsList = React.createClass({
   return flattenedCs;
   },
   displayContributors(cs) {
+    const imgStyle = {height: "auto", width:"auto", display: "block"};
     if (cs.length > 0) {
       let contribs = this.getUniqueCs(cs);
       let contributors = [];
@@ -41,7 +42,7 @@ ContributorsList = React.createClass({
                   contributors.push(
                         <div className="col-sm-2 col-md-2">
                           <div className="thumbnail">
-                            <img src={C.photo}/>
+                            <img src={C.photo} style={imgStyle}/>
                             <div className="caption">
                               <p>{C.firstName+" "}{C.lastName}</p>
                               net contribution: <p>{C.amount}</p>
