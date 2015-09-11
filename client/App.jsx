@@ -1,15 +1,17 @@
 App = React.createClass({
   getInitialState() {
     return {
-            CL: [{ firstName: "Carl", lastName: "Jung", photo:"http://a2.files.biography.com/image/upload/c_fit,cs_srgb,dpr_1.0,h_1200,q_80,w_1200/MTE5NTU2MzE2MjY4NjkzMDAz.jpg"},
-                { firstName: "Jordan", lastName: "Salinger", photo:"https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAN3AAAAJDNiMmJkZDMyLTBjNDAtNDExZi1hMjE1LTQ5ZjE3ZDQ0OTFhNg.jpg"},
-                { firstName: "Mark", lastName: "Spencer", photo:"https://pbs.twimg.com/profile_images/16706532/marknew_400x400.jpg"}],
-            empty: []
+
+          contributions: [
+            { amount: 100, contributor: { id: 2, firstName: "Carl", lastName: "Spencer", photo: "http://www.expressandstar.com/wpmvc/wp/wp-content/uploads/2012/01/WD4178673@Carl-Spencer-.thumb.jpg" } },
+            { amount: 700, contributor: { id: 9, firstName: "Jack", lastName: "Bauer", photo: "http://www.wheresourmoney.org/archive/wp-content/uploads/2010/01/jack-bauer.jpg" } },
+            { amount: 200, contributor: { id: 2, firstName: "Carl", lastName: "Spencer", photo: "http://www.expressandstar.com/wpmvc/wp/wp-content/uploads/2012/01/WD4178673@Carl-Spencer-.thumb.jpg"} }
+          ]
            };
   },
   render() {
     return <ContributorsList
-            contributors={this.state.empty}
+            contributors={this.state.contributions}
             />;
   }
 });
