@@ -1,4 +1,10 @@
 /* CSS declarations go here */
+
+*{margin:0;}
+html, body {
+  overflow-x: hidden;
+}
+
 .caption {
   text-align: center;
 }
@@ -17,3 +23,17 @@
   height: 100%;
   background-position: center center;
 }
+
+.row {
+  overflow-x: auto;
+  width: 150%;
+}
+
+.nav {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+

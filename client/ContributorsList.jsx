@@ -5,6 +5,12 @@ ContributorsList = React.createClass({
                                                                   contributor: React.PropTypes.object
                                                                  }))
   },
+  componentDidMount() {
+    $('.navbar').addEventListener(function(e) {
+      e.preventDefault();
+      console.log(e);
+    });
+  },
   getUniqueCs(cs) {
     let uniqueCs = {};
     let flattenedCs = [];
@@ -83,11 +89,9 @@ ContributorsList = React.createClass({
   render() {
     return (
       <span>
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            {this.displayContributors(this.props.contributors)}
-          </div>
-        </nav>
+        <div className="nav">
+          {this.displayContributors(this.props.contributors)}
+        </div>
       </span>
     );
   }
