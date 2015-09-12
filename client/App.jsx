@@ -13,6 +13,14 @@ App = React.createClass({
   getMeteorData() {
     return {contributions: Conts.find({"contributor.id": {$gte: this.state.startInd, $lte: this.state.startInd+6}}).fetch()};
   },
+  componentDidMount() {
+    if ($('#end-scroll').is(':visible')) {
+      //query for data
+      console.log('its visible');
+    } else {
+      console.log('its NOT visible');
+    }
+  },
   render() {
     return <ContributorsList
             contributors={this.data.contributions}
