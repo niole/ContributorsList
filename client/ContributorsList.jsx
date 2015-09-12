@@ -1,6 +1,9 @@
 ContributorsList = React.createClass({
   propTypes: {
-    contributors: React.PropTypes.array.isRequired
+    contributors: React.PropTypes.arrayOf(React.PropTypes.shape({
+                                                                  amount: React.PropTypes.number,
+                                                                  contributor: React.PropTypes.object
+                                                                 }))
   },
   getUniqueCs(cs) {
     let uniqueCs = {};
@@ -26,6 +29,8 @@ ContributorsList = React.createClass({
           aggContribs.firstName = c.contributor.firstName;
           aggContribs.lastName = c.contributor.lastName;
           aggContribs.photo = c.contributor.photo;
+          aggContribs.id = c.contributor.id;
+
         }
       });
       flattenedCs.push(aggContribs);
@@ -37,8 +42,11 @@ ContributorsList = React.createClass({
     if (cs.length > 0) {
       let contribs = this.getUniqueCs(cs);
       contributors = _.map(contribs.slice(0,6), C => {
+      const imgStyle={backgroundImage: "url('"+C.photo+"')"};
+                      //<div className="bkgrnd-img" style={imgStyle}/>
+
         return (
-                <div className="col-sm-2 col-md-2">
+                <div key={C.id} className="col-sm-2 col-md-2">
                   <div className="thumbnail">
                     <div className="thumbnail-frame">
                       <img src={C.photo} alt="alt"/>
