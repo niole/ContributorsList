@@ -9,21 +9,32 @@ App = React.createClass({
           ]
            };
   },
+  componentDidMount() {
+    $('#contributor-list').scroll( event => {
+      event.preventDefault();
+      console.log($('#scrollid-'+(this.state.startInd+5)));
+      let widthView = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      let posEnd = $('#scrollid-'+(this.state.startInd+5)).offset().left;
+      if (posEnd - widthView <= 0) {
+        console.log('VISIBLE');
+      }
+    });
+  },
+
   mixins: [ReactMeteorData],
   getMeteorData() {
-    return {contributions: Conts.find({"contributor.id": {$gte: this.state.startInd, $lte: this.state.startInd+6}}).fetch()};
+    return {contributions: Conts.find(
+                            {"contributor.id": {$gte: this.state.startInd, $lte: this.state.startInd+6}}
+                                     ).fetch().sort(
+                            function(a,b) { return a.contributor.id - b.contributor.id; } )};
   },
-  componentDidMount() {
-    if ($('#end-scroll').is(':visible')) {
-      //query for data
-      console.log('its visible');
-    } else {
-      console.log('its NOT visible');
-    }
+  compareInds() {
+    return a.contributor.id - b.contributor.id;
   },
   render() {
     return <ContributorsList
             contributors={this.data.contributions}
+            startInd={this.state.startInd}
             />;
   }
 });

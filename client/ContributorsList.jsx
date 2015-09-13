@@ -3,8 +3,10 @@ ContributorsList = React.createClass({
     contributors: React.PropTypes.arrayOf(React.PropTypes.shape({
                                                                   amount: React.PropTypes.number,
                                                                   contributor: React.PropTypes.object
-                                                                 }))
+                                                                 })).isRequired,
+    startInd: React.PropTypes.number.isRequired
   },
+
   getUniqueCs(cs) {
     let uniqueCs = {};
     let flattenedCs = [];
@@ -41,24 +43,27 @@ ContributorsList = React.createClass({
     let contributors;
     if (cs.length > 0) {
       let contribs = this.getUniqueCs(cs);
-      contributors = _.map(contribs.slice(0,6), C => {
-      const imgStyle={backgroundImage: "url('"+C.photo+"')"};
-                      //<div className="bkgrnd-img" style={imgStyle}/>
+      if (cs.length < 6) {
+      } else {
+        contributors = _.map(contribs.slice(0,6), C => {
+      //  const imgStyle={backgroundImage: "url('"+C.photo+"')"};
+                        //<div className="bkgrnd-img" style={imgStyle}/>
 
-        return (
-                <div key={C.id} className="col-sm-2 col-md-2">
-                  <div className="thumbnail">
-                    <div className="thumbnail-frame">
-                      <img src={C.photo} alt="alt"/>
-                    </div>
-                    <div className="caption">
-                      <p>{C.firstName+" "}{C.lastName}</p>
-                      net contribution: <p>{C.amount}</p>
+          return (
+                  <div id={"scrollid-"+C.id} key={C.id} className="col-sm-2 col-md-2">
+                    <div className="thumbnail">
+                      <div className="thumbnail-frame">
+                        <img src={C.photo} alt="alt"/>
+                      </div>
+                      <div className="caption">
+                        <p>{C.firstName+" "}{C.lastName}</p>
+                        net contribution: <p>{C.amount}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-      });
+                );
+        });
+      }
     } else {
       contributors = [
         <div className="col-sm-2 col-md-2 navbar-left">
@@ -76,7 +81,6 @@ ContributorsList = React.createClass({
     return (
            <div className="row">
             {contributors}
-            <span id="end-scroll"/>
            </div>
            );
 
@@ -84,7 +88,7 @@ ContributorsList = React.createClass({
   render() {
     return (
       <span>
-        <div className="nav">
+        <div id="contributor-list" className="nav">
           {this.displayContributors(this.props.contributors)}
         </div>
       </span>
