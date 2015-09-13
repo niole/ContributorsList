@@ -1,40 +1,42 @@
 App = React.createClass({
-  getInitialState() {
-    return {
-          startInd: 0,
-          contributions: [
-            { amount: 100, contributor: { id: 2, firstName: "Carl", lastName: "Spencer", photo: "http://www.expressandstar.com/wpmvc/wp/wp-content/uploads/2012/01/WD4178673@Carl-Spencer-.thumb.jpg" } },
-            { amount: 700, contributor: { id: 9, firstName: "Jack", lastName: "Bauer", photo: "http://www.wheresourmoney.org/archive/wp-content/uploads/2010/01/jack-bauer.jpg" } },
-            { amount: 200, contributor: { id: 2, firstName: "Carl", lastName: "Spencer", photo: "http://www.expressandstar.com/wpmvc/wp/wp-content/uploads/2012/01/WD4178673@Carl-Spencer-.thumb.jpg"} }
-          ]
-           };
-  },
-  componentDidMount() {
-    $('#contributor-list').scroll( event => {
-      event.preventDefault();
-      console.log($('#scrollid-'+(this.state.startInd+5)));
-      let widthView = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      let posEnd = $('#scrollid-'+(this.state.startInd+5)).offset().left;
-      if (posEnd - widthView <= 0) {
-        console.log('VISIBLE');
-      }
-    });
-  },
-
   mixins: [ReactMeteorData],
+
   getMeteorData() {
     return {contributions: Conts.find(
-                            {"contributor.id": {$gte: this.state.startInd, $lte: this.state.startInd+6}}
+                            {"contributor.id": {$gte: this.state.startInd,
+                              $lte: this.state.startInd+6 }}
                                      ).fetch().sort(
-                            function(a,b) { return a.contributor.id - b.contributor.id; } )};
+                            function(a,b) { return a.contributor.id - b.contributor.id; } ),
+            maxInd: this.biggest.length > 0 ? this.biggest[0].contributor.id : this.biggest
+
+            };
   },
-  compareInds() {
-    return a.contributor.id - b.contributor.id;
+  getInitialState() {
+    this.biggest = Conts.find({}, {limit: 1, sort: {"contributor.id": -1}}).fetch();
+    return { startInd: 0};
+
+  },
+  componentDidMount() {
+
+    $('#contributor-list').bind('mousewheel', function(event){
+      event.preventDefault();
+      this.getNewData(event.originalEvent.wheelDeltaX);
+    }.bind(this));
   },
   render() {
     return <ContributorsList
             contributors={this.data.contributions}
             startInd={this.state.startInd}
             />;
+  },
+  getNewData(dir) {
+    if ( dir < 0) {
+      this.setState({startInd:
+                      (this.state.startInd <= this.data.maxInd-6) ?
+                       this.state.startInd+1 : this.state.startInd });
+    }
+    if ( dir > 0) {
+      this.setState({startInd: (this.state.startInd-1 > -1) ? this.state.startInd-1 : 0});
+    }
   }
 });

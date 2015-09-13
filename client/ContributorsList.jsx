@@ -6,10 +6,9 @@ ContributorsList = React.createClass({
                                                                  })).isRequired,
     startInd: React.PropTypes.number.isRequired
   },
-
   getUniqueCs(cs) {
-    let uniqueCs = {};
-    let flattenedCs = [];
+    var uniqueCs = {};
+    var flattenedCs = [];
     //returned array --> [{ amount: number, firstName: string, lastName: string, photo: string}]
     _.forEach(cs, c => {
       if (uniqueCs[c.contributor.id]) {
@@ -20,7 +19,7 @@ ContributorsList = React.createClass({
     });
 
     for (var id in uniqueCs) {
-      let aggContribs = {};
+      var aggContribs = {};
       _.forEach(uniqueCs[id], c => {
         if (aggContribs.amount) {
           //add to amount

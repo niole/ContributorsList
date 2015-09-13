@@ -35,7 +35,7 @@ html, body {
 
 .row {
   overflow-x: auto;
-  width: 151%;
+  width: 100%;
 }
 
 .nav {
